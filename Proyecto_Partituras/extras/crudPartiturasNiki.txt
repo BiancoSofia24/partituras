@@ -1,0 +1,106 @@
+Web Partituras Niki
+
+* Archivos "includes"
+.- header.html (Utilizable boostrap o diseño propio) /
+.- nav.php (Barra de navegación) /
+.- footer.php (Pie de página) /
+
+* Archivos PHP
+.- conexion.php (ARCHIVO DE FUNCIONES /
+		función conectar)
+.- categorias.php (CRUD de Categorías, ARCHIVO DF FUNCIONES
+		funcion mostrarCategorias
+		funcion agregarCategoria
+		funcion verCategoriaPorId
+		funcion modificarCategoria
+		funcion eliminarCategoria )
+.- partituras.php (CRUD de Partituras, ARCHIVO DE FUNCIONES
+		función mostrarPartituras [listado],  READ
+ 		función agregarPartitura [insertado], CREATE
+		funcion verParituraPorId
+		función modificarPartitura [editado], UPDATE
+		función eliminarPartitura [eliminado] DELETE)
+
+.- admin.php (Página de control, muestra los paneles a usar) /
+.- adminCategorias.php (Panel de control de categorías,
+   ventana de visualización id, Categoría)
+.- adminPartituras.php (Panel de control de partituras, 
+   ventana de visualización Nombre, Autor, Categoría, Archivo PDF)
+
+.- formAgregarPartitura.php (Formulario para agregar una nueva partitura)
+.- formModificarPartitura.php (Formulario de modificación)
+
+.- agregarPartitura.php (Página de verificación)
+.- modificarPartitura.php (Página de verificación)
+
+BBDD
+.- Base de datos de partituras /
+
+-- Creación de la base de datos musica --
+
+CREATE DATABASE IF NOT EXIST 'musica' DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE 'musica';
+
+-- Tabla categorias --
+
+CREATE TABLE 'categorias'(
+			'idCategoria' int(11) NOT NULL,
+			'catgNombre' varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Datos para tabla categorias --
+
+INSERT INTO 'categorias' ('idCategoria', 'catgNombre')
+VALUES  (1, Estudio),
+	(2, Teoría musical),
+	(3, Renacimiento),
+	(4, Barroco),
+	(5, Clasisimo).
+	(6, Romantisismo),
+	(7, Contemporaneo);
+
+-- Tabla partituras --
+	
+CREATE TABLE 'partituras'(
+			'idPartitura' int(11) NOT NULL,
+			'partNombre' varchar(150) NOT NULL,
+			'partAutor' varchar(150) NOT NULL,
+			'idCategoria' int(11) NOT NULL,
+			'partArchivo' tinytext
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Datos para la tabla partituras --
+
+INSERT INTO 'partituras'('idPartitura', 'partNombre', 'partAutor', 'idCategoria', 'partArchivo')
+VALUES  (1, Estudio n°1, Carcassi, 1, ),
+	(2, Danza del Altiplano, Leo Brower, 7, );
+
+-- INDICES --
+-- Tabla categorias --
+
+ALTER TABLE 'categorias'
+ADD PRIMARY KEY ('idCategoria');
+
+-- Tabla partituras --
+
+ALTER TABLE 'partituras'
+ADD PRIMARY KEY ('idPartitura')
+ADD KEY ('idCategoria');
+
+-- AUTO_INCREMENT de las tablas --
+
+ALTER TABLE 'categorias'
+MODIFY 'idCategoria' int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+ALTER TABLE 'partituras'
+MODIFY 'idPartitura' int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+-- Restricciones / Filtro para tabla partituras --
+
+ALTER TABLE 'partituras'
+ADD CONSTRAINT 'partituras_ibfk_1' FOREIGN KEY ('idCategoria') REFERENCES 'categorias' ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+
+
+
